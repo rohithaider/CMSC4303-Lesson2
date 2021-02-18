@@ -26,6 +26,18 @@ class _ListEventState extends State<ListEventScreen> {
     return Scaffold(
         appBar: AppBar(
           title: Text('List Event Demo'),
+          actions: con.selected != null
+              ? [
+                  IconButton(
+                    icon: Icon(Icons.delete),
+                    onPressed: con.delete,
+                  ),
+                  IconButton(
+                    icon: Icon(Icons.cancel),
+                    onPressed: con.cancel,
+                  ),
+                ]
+              : null,
         ),
         body: ListView.builder(
           itemCount: courseList.length,
@@ -80,6 +92,9 @@ class _Controller {
       });
     }
   }
+
+  void delete() {}
+  void cancel() {}
 
   void showDetails(BuildContext context, Course course) {
     showDialog(
