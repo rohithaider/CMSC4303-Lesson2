@@ -46,6 +46,12 @@ class _Controller {
       child: ListTile(
         title: Text(courseList[index].title),
         subtitle: Text(courseList[index].number),
+        onTap: () {
+          print('onTap: $index');
+        },
+        onLongPress: () {
+          print('onLongPress : $index');
+        },
       ),
     );
   }
