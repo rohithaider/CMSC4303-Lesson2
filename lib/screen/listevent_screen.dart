@@ -37,10 +37,15 @@ class _ListEventState extends State<ListEventScreen> {
 class _Controller {
   _ListEventState state;
   _Controller(this.state);
+  List<int> selected;
+  final Color selectedColor = Colors.indigo[500];
+  final Color unselectedColor = Colors.indigo[200];
 
   Widget getTile(BuildContext context, int index) {
     return Container(
-      color: Colors.indigo[200],
+      color: (selected != null && selected.indexOf(index) >= 0)
+          ? selectedColor
+          : unselectedColor,
       padding: EdgeInsets.all(10),
       margin: EdgeInsets.all(10),
       child: ListTile(
@@ -50,10 +55,30 @@ class _Controller {
           showDetails(context, courseList[index]);
         },
         onLongPress: () {
-          print('onLongPress : $index');
+          _longPress(context, index);
         },
       ),
     );
+  }
+
+  void _longPress(BuildContext context, int index) {
+    if (selected == null) {
+      state.render(() {
+        selected = [];
+        selected.add(index);
+      });
+    } else {
+      state.render(() {
+        if (selected.indexOf(index) < 0) {
+          selected.add(index);
+        } else {
+          //cancel the selection
+
+          selected.removeWhere((value) => value == index);
+          if (selected.length == 0) selected = null;
+        }
+      });
+    }
   }
 
   void showDetails(BuildContext context, Course course) {
