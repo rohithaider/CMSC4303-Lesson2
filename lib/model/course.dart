@@ -44,4 +44,10 @@ var courseList = [
       prereq: '1513',
       imageURL:
           'https://m.media-amazon.com/images/I/71XfaqjKswL._AC_UY327_FMwebp_QL65_.jpg'),
+  Course(
+      number: 'CMSC 1423',
+      title: 'Begining Programming',
+      prereq: 'College Algebra',
+      imageURL:
+          'https://m.media-amazon.com/images/I/7102H4YF1tL._AC_UY327_FMwebp_QL65_.jpg'),
 ];
