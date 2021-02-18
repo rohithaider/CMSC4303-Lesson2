@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lesson2/screen/counterdemo_screen.dart';
+import 'package:lesson2/screen/widgetlifecycle_screen.dart';
 
 class StartScreen extends StatelessWidget {
   static const routeName = '/startScreen';
@@ -19,9 +20,13 @@ class StartScreen extends StatelessWidget {
             ),
           ),
           RaisedButton(
-            onPressed: null,
-            child: Text('Menu 2'),
-          )
+            onPressed: () =>
+                Navigator.pushNamed(context, WidgetLifeCycleScreen.routeName),
+            child: Text(
+              'Widget life Cycle Demo',
+              style: Theme.of(context).textTheme.headline5,
+            ),
+          ),
         ],
       ),
     );
