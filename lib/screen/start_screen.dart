@@ -39,7 +39,7 @@ class StartScreen extends StatelessWidget {
           RaisedButton(
             onPressed: () => Navigator.pushNamed(context, ListEventScreen.routeName),
             child: Text(
-              'List Event Screen Demo',
+              'List Event Screen  Demo',
               style: Theme.of(context).textTheme.headline5,
             ),
           ),
