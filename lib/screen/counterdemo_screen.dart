@@ -9,7 +9,18 @@ class CounterDemoScreen extends StatefulWidget {
 }
 
 class _CounterDemoState extends State<CounterDemoScreen> {
+  _Controller con;
   int count = 0;
+  @override
+  void initState() {
+    super.initState();
+    con = _Controller(this);
+  }
+
+  void render(fn) {
+    setState(fn);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,22 +34,14 @@ class _CounterDemoState extends State<CounterDemoScreen> {
             style: Theme.of(context).textTheme.headline5,
           ),
           RaisedButton(
-            onPressed: () {
-              setState(() {
-                ++count;
-              });
-            },
+            onPressed: con.upCount,
             child: Text(
               'Up',
               style: Theme.of(context).textTheme.headline5,
             ),
           ),
           RaisedButton(
-            onPressed: () {
-              setState(() {
-                --count;
-              });
-            },
+            onPressed: con.downCount,
             child: Text(
               'Down',
               style: Theme.of(context).textTheme.headline5,
@@ -47,5 +50,21 @@ class _CounterDemoState extends State<CounterDemoScreen> {
         ],
       ),
     );
+  }
+}
+
+class _Controller {
+  _CounterDemoState state;
+  _Controller(this.state);
+  void upCount() {
+    state.render(() {
+      ++state.count;
+    });
+  }
+
+  void downCount() {
+    state.render(() {
+      --state.count;
+    });
   }
 }
