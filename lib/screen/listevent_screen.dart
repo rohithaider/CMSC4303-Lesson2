@@ -94,7 +94,10 @@ class _Controller {
   }
 
   void delete() {}
-  void cancel() {}
+  void cancel() {
+    state.render(() => selected = null);
+    selected = null;
+  }
 
   void showDetails(BuildContext context, Course course) {
     showDialog(
