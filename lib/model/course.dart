@@ -25,13 +25,13 @@ var courseList = [
       title: 'Programming II',
       prereq: '1513',
       imageURL:
-          'https://m.media-amazon.com/images/I/9155wsDnIFL._AC_UL480_FMwebp_QL65_.jpg'),
+          'https://m.media-amazon.com/images/I/61XJ7lB20lL._AC_UL480_FMwebp_QL65_.jpg'),
   Course(
       number: 'CMSC 4412',
       title: 'Software Engineering',
       prereq: '3103',
       imageURL:
-          'https://m.media-amazon.com/images/I/71KiRKerNFL._AC_UL480_FMwebp_QL65_.jpg'),
+          'https://m.media-amazon.com/images/I/91VSEvbH1tL._AC_UL480_FMwebp_QL65_.jpg'),
   Course(
       number: 'CMSC 4403',
       title: 'Web Server Programming',
