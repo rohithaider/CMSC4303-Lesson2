@@ -93,7 +93,16 @@ class _Controller {
     }
   }
 
-  void delete() {}
+  void delete() {
+    selected.sort(); //ascending order
+    state.render(() {
+      for (int i = selected.length - 1; i >= 0; i--) {
+        courseList.removeAt(selected[i]);
+      }
+      selected = null;
+    });
+  }
+
   void cancel() {
     state.render(() => selected = null);
     selected = null;
