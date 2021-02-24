@@ -12,6 +12,7 @@ class FormDemoScreen extends StatefulWidget {
 class _FormDemoState extends State<FormDemoScreen> {
   _Controller con;
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  String error;
   @override
   void initState() {
     super.initState();
@@ -36,6 +37,14 @@ class _FormDemoState extends State<FormDemoScreen> {
               'Sign in, Please!',
               style: Theme.of(context).textTheme.headline5,
             ),
+            error == null
+                ? SizedBox(
+                    height: 1,
+                  )
+                : Text(
+                    error,
+                    style: TextStyle(fontSize: 16, color: Colors.red),
+                  ),
             TextFormField(
               decoration: InputDecoration(
                 icon: Icon(Icons.email),
@@ -86,7 +95,7 @@ class _Controller {
         orElse: () => null);
 
     if (user == null) {
-      print('login info error');
+      state.render(() => state.error = 'not valid user credential');
     } else {
       print('navigate to user home page');
       print(user.toString());
