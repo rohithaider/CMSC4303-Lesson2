@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lesson2/model/user_record.dart';
 
 class FormDemoScreen extends StatefulWidget {
   static const routeName = '/formDemoScreen';
@@ -72,14 +73,24 @@ class _FormDemoState extends State<FormDemoScreen> {
 class _Controller {
   _FormDemoState state;
   _Controller(this.state);
-  String email;
-  String password;
+  UserRecord userRecord = UserRecord();
 
   void signIn() {
     if (!state.formKey.currentState.validate()) return;
     //now validated!
     state.formKey.currentState.save();
-    print('email = $email password = $password');
+    //lookup fake db
+    var user = UserRecord.fakeDB.firstWhere(
+        (element) =>
+            element.email == userRecord.email && element.password == userRecord.password,
+        orElse: () => null);
+
+    if (user == null) {
+      print('login info error');
+    } else {
+      print('navigate to user home page');
+      print(user.toString());
+    }
   }
 
   String validateEmail(String value) {
@@ -93,10 +104,10 @@ class _Controller {
   }
 
   void saveEmail(String value) {
-    email = value;
+    userRecord.email = value;
   }
 
   void savePassword(String value) {
-    password = value;
+    userRecord.password = value;
   }
 }
