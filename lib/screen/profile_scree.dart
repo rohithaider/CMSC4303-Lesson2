@@ -13,6 +13,7 @@ class _ProfileState extends State<ProfileScreen> {
   _Controller con;
   UserRecord userRecord;
   bool editMode = false;
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -36,7 +37,74 @@ class _ProfileState extends State<ProfileScreen> {
               : IconButton(icon: Icon(Icons.edit), onPressed: con.edit)
         ],
       ),
-      body: Text('profile'),
+      body: Form(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  Expanded(
+                    flex: 1,
+                    child: Text(
+                      'Name',
+                      style: Theme.of(context).textTheme.headline6,
+                    ),
+                  ),
+                  Expanded(
+                    flex: 4,
+                    child: TextFormField(
+                      enabled: editMode,
+                      initialValue: userRecord.name,
+                      validator: null,
+                      onSaved: null,
+                    ),
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    flex: 1,
+                    child: Text(
+                      'Phone',
+                      style: Theme.of(context).textTheme.headline6,
+                    ),
+                  ),
+                  Expanded(
+                    flex: 4,
+                    child: TextFormField(
+                      enabled: editMode,
+                      initialValue: userRecord.phone,
+                      validator: null,
+                      onSaved: null,
+                    ),
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    flex: 1,
+                    child: Text(
+                      'Age',
+                      style: Theme.of(context).textTheme.headline6,
+                    ),
+                  ),
+                  Expanded(
+                    flex: 4,
+                    child: TextFormField(
+                      enabled: editMode,
+                      initialValue: userRecord.age.toString(),
+                      validator: null,
+                      onSaved: null,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
