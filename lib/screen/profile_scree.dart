@@ -101,6 +101,15 @@ class _ProfileState extends State<ProfileScreen> {
                   ),
                 ],
               ),
+              Text('Classification'),
+              DropdownButtonFormField(
+                disabledHint: Text(
+                  userRecord.classification.toString().split('.')[1],
+                ),
+                value: userRecord.classification,
+                items: con.getClassificationList(),
+                onChanged: editMode ? (value) {} : null,
+              )
             ],
           ),
         ),
@@ -119,5 +128,14 @@ class _Controller {
 
   void update() {
     state.render(() => state.editMode = false);
+  }
+
+  List getClassificationList() {
+    return Classification.values
+        .map((c) => DropdownMenuItem(
+              child: Text(c.toString().split('.')[1]),
+              value: c,
+            ))
+        .toList();
   }
 }
