@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lesson2/model/user_record.dart';
+import 'package:lesson2/screen/profile_scree.dart';
 
 class UserHomeScreen extends StatefulWidget {
   static const routeName = '/userHomeScreen';
@@ -37,7 +38,7 @@ class _UserHomeState extends State<UserHomeScreen> {
               ListTile(
                 leading: Icon(Icons.person),
                 title: Text('Profile'),
-                onTap: null,
+                onTap: con.profile,
               ),
               ListTile(
                 leading: Icon(Icons.exit_to_app),
@@ -63,6 +64,11 @@ class _UserHomeState extends State<UserHomeScreen> {
 class _Controller {
   _UserHomeState state;
   _Controller(this.state);
+
+  void profile() {
+    Navigator.pushNamed(state.context, ProfileScreen.routeName,
+        arguments: state.userRecord);
+  }
 
   void signOut() {
     Navigator.of(state.context).pop(); //close the drawer
