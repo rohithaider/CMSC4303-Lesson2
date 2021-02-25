@@ -101,14 +101,20 @@ class _ProfileState extends State<ProfileScreen> {
                   ),
                 ],
               ),
-              Text('Classification'),
+              SizedBox(
+                height: 20.0,
+              ),
+              Text(
+                'Classification',
+                style: Theme.of(context).textTheme.headline6,
+              ),
               DropdownButtonFormField(
                 disabledHint: Text(
                   userRecord.classification.toString().split('.')[1],
                 ),
                 value: userRecord.classification,
                 items: con.getClassificationList(),
-                onChanged: editMode ? (value) {} : null,
+                onChanged: editMode ? con.onChangedClassification : null,
               )
             ],
           ),
@@ -137,5 +143,9 @@ class _Controller {
               value: c,
             ))
         .toList();
+  }
+
+  void onChangedClassification(Classification c) {
+    state.render(() => state.userRecord.classification = c);
   }
 }
