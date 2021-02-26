@@ -1,3 +1,5 @@
+//import 'dart:html';
+
 import 'package:flutter/material.dart';
 import 'package:lesson2/model/user_record.dart';
 
@@ -39,104 +41,135 @@ class _ProfileState extends State<ProfileScreen> {
               : IconButton(icon: Icon(Icons.edit), onPressed: con.edit)
         ],
       ),
-      body: Form(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  Expanded(
-                    flex: 1,
-                    child: Text(
-                      'Name',
-                      style: Theme.of(context).textTheme.headline6,
+      body: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: Form(
+          key: formKey,
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    Expanded(
+                      flex: 1,
+                      child: Text(
+                        'Name',
+                        style: Theme.of(context).textTheme.headline6,
+                      ),
                     ),
-                  ),
-                  Expanded(
-                    flex: 4,
-                    child: TextFormField(
-                      enabled: editMode,
-                      initialValue: userRecord.name,
-                      validator: null,
-                      onSaved: null,
+                    Expanded(
+                      flex: 4,
+                      child: TextFormField(
+                        enabled: editMode,
+                        initialValue: userRecord.name,
+                        validator: con.validateName,
+                        onSaved: con.saveName,
+                      ),
                     ),
-                  ),
-                ],
-              ),
-              Row(
-                children: [
-                  Expanded(
-                    flex: 1,
-                    child: Text(
-                      'Phone',
-                      style: Theme.of(context).textTheme.headline6,
-                    ),
-                  ),
-                  Expanded(
-                    flex: 4,
-                    child: TextFormField(
-                      enabled: editMode,
-                      initialValue: userRecord.phone,
-                      validator: null,
-                      onSaved: null,
-                    ),
-                  ),
-                ],
-              ),
-              Row(
-                children: [
-                  Expanded(
-                    flex: 1,
-                    child: Text(
-                      'Age',
-                      style: Theme.of(context).textTheme.headline6,
-                    ),
-                  ),
-                  Expanded(
-                    flex: 4,
-                    child: TextFormField(
-                      enabled: editMode,
-                      initialValue: userRecord.age.toString(),
-                      validator: null,
-                      onSaved: null,
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 20.0,
-              ),
-              Text(
-                'Classification',
-                style: Theme.of(context).textTheme.headline6,
-              ),
-              DropdownButtonFormField(
-                disabledHint: Text(
-                  userRecord.classification.toString().split('.')[1],
+                  ],
                 ),
-                value: userRecord.classification,
-                items: con.getClassificationList(),
-                onChanged: editMode ? con.onChangedClassification : null,
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Text(
-                'Major',
-                style: Theme.of(context).textTheme.headline6,
-              ),
-              Column(
-                children: con.getMajorRadioTiles(editMode),
-              ),
-              SizedBox(height: 20.0),
-              Text(
-                'Language Proficiency',
-                style: Theme.of(context).textTheme.headline6,
-              ),
-              Column(
-                children: con.getLanguageCheckBoxes(editMode),
-              ),
-            ],
+                Row(
+                  children: [
+                    Expanded(
+                      flex: 1,
+                      child: Text(
+                        'Phone',
+                        style: Theme.of(context).textTheme.headline6,
+                      ),
+                    ),
+                    Expanded(
+                      flex: 4,
+                      child: TextFormField(
+                        enabled: editMode,
+                        initialValue: userRecord.phone,
+                        validator: con.validatePhone,
+                        onSaved: con.savePhone,
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                      flex: 1,
+                      child: Text(
+                        'Age',
+                        style: Theme.of(context).textTheme.headline6,
+                      ),
+                    ),
+                    Expanded(
+                      flex: 4,
+                      child: TextFormField(
+                        enabled: editMode,
+                        initialValue: userRecord.age.toString(),
+                        validator: con.validateAge,
+                        onSaved: con.saveAge,
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 20.0,
+                ),
+                Text(
+                  'Classification',
+                  style: Theme.of(context).textTheme.headline6,
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                    color: Colors.blue[50],
+                    border: Border.all(
+                      color: Colors.blue[800],
+                      width: 3,
+                    ),
+                  ),
+                  child: DropdownButtonFormField(
+                    disabledHint: Text(
+                      userRecord.classification.toString().split('.')[1],
+                    ),
+                    value: userRecord.classification,
+                    items: con.getClassificationList(),
+                    onChanged: editMode ? con.onChangedClassification : null,
+                  ),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Text(
+                  'Major',
+                  style: Theme.of(context).textTheme.headline6,
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                    color: Colors.pink[50],
+                    border: Border.all(
+                      color: Colors.blue[800],
+                      width: 3,
+                    ),
+                  ),
+                  child: Column(
+                    children: con.getMajorRadioTiles(editMode),
+                  ),
+                ),
+                SizedBox(height: 20.0),
+                Text(
+                  'Language Proficiency',
+                  style: Theme.of(context).textTheme.headline6,
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                    color: Colors.teal[50],
+                    border: Border.all(
+                      color: Colors.blue[800],
+                      width: 3,
+                    ),
+                  ),
+                  child: Column(
+                    children: con.getLanguageCheckBoxes(editMode),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -153,7 +186,51 @@ class _Controller {
   }
 
   void update() {
+    if (!state.formKey.currentState.validate()) return;
+    state.formKey.currentState.save();
+    state.userRecordOriginal.assign(state.userRecord);
     state.render(() => state.editMode = false);
+  }
+
+  String validateName(String value) {
+    if (value.length < 2) {
+      return 'min 2 chars';
+    } else {
+      return null;
+    }
+  }
+
+  void saveName(String value) {
+    state.userRecord.name = value;
+  }
+
+  String validatePhone(String value) {
+    if (int.tryParse(value) == null)
+      return 'digits only';
+    else if (value.length < 2)
+      return 'min 4 digits';
+    else
+      return null;
+  }
+
+  void savePhone(String value) {
+    state.userRecord.phone = value;
+  }
+
+  String validateAge(String value) {
+    try {
+      int age = int.parse(value);
+      if (age >= 5)
+        return null;
+      else
+        return 'min age is 5';
+    } catch (e) {
+      return 'not valid age';
+    }
+  }
+
+  void saveAge(String value) {
+    state.userRecord.age = int.parse(value);
   }
 
   List getClassificationList() {
