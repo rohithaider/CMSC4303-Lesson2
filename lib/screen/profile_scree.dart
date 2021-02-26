@@ -126,6 +126,14 @@ class _ProfileState extends State<ProfileScreen> {
               Column(
                 children: con.getMajorRadioTiles(editMode),
               ),
+              SizedBox(height: 20.0),
+              Text(
+                'Language Proficiency',
+                style: Theme.of(context).textTheme.headline6,
+              ),
+              Column(
+                children: con.getLanguageCheckBoxes(editMode),
+              ),
             ],
           ),
         ),
@@ -161,13 +169,30 @@ class _Controller {
 
   List getMajorRadioTiles(bool editMode) {
     return Major.values
-        .map((m) => RadioListTile(
-              title: Text(m.toString().split('.')[1]),
-              value: m,
-              groupValue: state.userRecord.major,
+        .map(
+          (m) => RadioListTile(
+            title: Text(m.toString().split('.')[1]),
+            dense: true,
+            value: m,
+            groupValue: state.userRecord.major,
+            onChanged: editMode
+                ? (Major value) {
+                    state.render(() => state.userRecord.major = value);
+                  }
+                : null,
+          ),
+        )
+        .toList();
+  }
+
+  List getLanguageCheckBoxes(bool editMode) {
+    return Language.values
+        .map((e) => CheckboxListTile(
+              value: state.userRecord.languages[e],
+              title: Text(e.toString().split('.')[1]),
               onChanged: editMode
-                  ? (Major value) {
-                      state.render(() => state.userRecord.major = value);
+                  ? (bool value) {
+                      state.render(() => state.userRecord.languages[e] = value);
                     }
                   : null,
             ))
