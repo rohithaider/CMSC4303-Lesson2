@@ -28,7 +28,7 @@ class _ProfileState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    userRecordOriginal = ModalRoute.of(context).settings.arguments;
+    userRecordOriginal ??= ModalRoute.of(context).settings.arguments;
     userRecord ??= UserRecord.clone(userRecordOriginal);
     return Scaffold(
       appBar: AppBar(
